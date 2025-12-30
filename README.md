@@ -2,7 +2,9 @@
 
 A full-stack Infrastructure-as-a-Service (IaaS) platform that automates the deployment and management of Minecraft server instances. This project orchestrates Proxmox LXC containers, Cloudflare DNS, and Velocity Proxy routing into a seamless, self-service hosting environment.
 
-
+![Request Page](assets/requestpage.png)
+![Admin Page](assets/adminpage.png)
+![minecraft server](assets/serverOnline.png)
 
 ## 🚀 Key Features
 
