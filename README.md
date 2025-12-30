@@ -75,10 +75,10 @@ gunicorn --timeout 120 --workers 3 app:app
 ### API Limitations: 
 Solved the 501 Not Implemented error by pivoting from exec API calls to a robust Host-to-Container file push strategy.
 
-###Race Conditions: 
+### Race Conditions: 
 Implemented a retry-loop in the Bash init script to ensure configuration files are fully injected before the Minecraft server attempts to start.
 
-###Process Timeouts: 
+### Process Timeouts: 
 Migrated from synchronous requests to asynchronous threading to bypass Gunicorn worker timeouts during infrastructure heavy-lifting.
 
 
