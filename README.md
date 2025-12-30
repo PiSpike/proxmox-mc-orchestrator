@@ -50,3 +50,36 @@ A full-stack Infrastructure-as-a-Service (IaaS) platform that automates the depl
 │   └── mc-init.sh         # Container-side initialization script
 ├── templates/             # Admin Dashboard & UI
 └── .env.example           # Template for environment variables
+```
+## 🔧 Installation & Setup
+
+### Proxmox Host
+Ensure SSH access is enabled and a base LXC template (ID 128) is prepared with `jq` installed.
+
+### Web App
+```bash
+git clone [https://github.com/yourusername/proxmox-mc-orchestrator.git](https://github.com/yourusername/proxmox-mc-orchestrator.git)
+cd proxmox-mc-orchestrator
+pip install -r requirements.txt
+```
+### Environment Variables: 
+Create a .env file with your Proxmox API keys, Cloudflare Token, and SSH credentials.
+
+### Deployment: 
+Run via Gunicorn to handle production traffic:
+
+```bash
+gunicorn --timeout 120 --workers 3 app:app
+```
+## 🛡️ Challenges Overcome
+### API Limitations: 
+Solved the 501 Not Implemented error by pivoting from exec API calls to a robust Host-to-Container file push strategy.
+
+###Race Conditions: 
+Implemented a retry-loop in the Bash init script to ensure configuration files are fully injected before the Minecraft server attempts to start.
+
+###Process Timeouts: 
+Migrated from synchronous requests to asynchronous threading to bypass Gunicorn worker timeouts during infrastructure heavy-lifting.
+
+
+
