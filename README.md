@@ -1,4 +1,4 @@
-# Proxmox Virtualized Minecraft Orchestrator (PvMO)
+# Proxmox Virtualized Minecraft Orchestrator
 
 A full-stack Infrastructure-as-a-Service (IaaS) platform that automates the deployment and management of Minecraft server instances. This project orchestrates Proxmox LXC containers, Cloudflare DNS, and Velocity Proxy routing into a seamless, self-service hosting environment.
 
