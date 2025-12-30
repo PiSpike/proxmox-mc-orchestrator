@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Admin | Control Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head> 
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="container" style="max-width: 900px;">
+        <h1>PENDING WORLD REQUESTS</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if requests %}
+                    {% for req in requests %}
+                    <tr>
+                        <td>#{{ req.id }}</td>
+                        <td>{{ req.email }}</td>
+                        <td>
+                            <span class="badge {{ req.status.lower() }}">{{ req.status }}</span>
+                        </td>
+                        <td>
+                            {% if req.status == 'PENDING' %}
+                                <div style="display: flex; gap: 5px;">
+                                    <form action="/approve/{{ req.id }}" method="POST">
+                                        <button type="submit" class="mc-btn approve" style="padding: 5px 10px;">✔</button>
+                                    </form>
+
+                                    <form action="/deny/{{ req.id }}" method="POST" onsubmit="return confirm('Deny this request?');">
+                                        <button type="submit" class="mc-btn deny" style="padding: 5px 10px;">✖</button>
+                                    </form>
+                                </div>
+                            {% elif req.status == 'APPROVED' %}
+                                <form action="/delete/{{ req.id }}" method="POST" style="display:inline;" onsubmit="return confirm('Delete this server forever?');">
+                                    <button class="mc-btn deny">DELETE</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #888;">No requests found...</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <a href="/" class="mc-btn" style="flex: 1; text-align:center; text-decoration:none;">VIEW SITE</a>
+            <form action="/clear" method="POST" style="flex: 1;">
+        </div>
+    </div>
+
+</body>
+</html>
